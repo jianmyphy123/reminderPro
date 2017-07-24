@@ -1,6 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addReminder } from '../actions';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      text: ''
+    };
+  }
+
+  addReminder() {
+    this.props.addReminder(this.state.text);
+  }
+
   render() {
     return (
       <div className="App">
@@ -11,11 +25,12 @@ class App extends Component {
           <div className="form-group">
             <input
               className="form-contoll"
-              placeholder="I have to ..."/>
+              placeholder="I have to ..."
+              onChange={event => this.setState({text: event.target.value})}/>
             <button
               type="button"
               className="btn btn-success"
-              >
+              onClick={() => this.addReminder()}>
               Add Reminder
             </button>
           </div>
@@ -25,4 +40,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(null, { addReminder })(App);
